@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export type CreateUser = {
   name: string;
@@ -20,9 +20,9 @@ type UserStore = {
 };
 
 const emptyUser: CreateUser = {
-  name: "",
-  password: "",
-  email: "",
+  name: '',
+  password: '',
+  email: '',
 };
 
 export const useUserStore = create<UserStore>((set) => ({
@@ -34,7 +34,7 @@ export const useUserStore = create<UserStore>((set) => ({
       currentUser: state.newUser,
       newUser: emptyUser,
     }));
-    localStorage.setItem("connected_user", JSON.stringify(this.currentUser));
+    localStorage.setItem('connected_user', JSON.stringify(this.currentUser));
   },
   setNewUser(UserInput) {
     set((state) => ({

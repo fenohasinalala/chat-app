@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { CreateUser } from "./store";
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { CreateUser } from './store';
 
 type Props = {};
 function Signup({}: Props) {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (event) => {
@@ -17,8 +17,8 @@ function Signup({}: Props) {
         email: email,
         password: password,
       };
-      localStorage.setItem("currentUser", JSON.stringify(newUser));
-      router.push("/");
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      router.push('/');
     }
 
     // Call your API to sign up the user

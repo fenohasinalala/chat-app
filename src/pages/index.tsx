@@ -1,22 +1,22 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { useEffect, useState } from "react";
-import { CreateUser } from "./store";
-import { useRouter } from "next/router";
+import Head from 'next/head';
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import styles from '@/styles/Home.module.css';
+import { useEffect, useState } from 'react';
+import { CreateUser } from './store';
+import { useRouter } from 'next/router';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<CreateUser | null>(null);
   useEffect(() => {
-    if (localStorage.getItem("currentUser")) {
-      setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
-      router.push("/");
+    if (localStorage.getItem('currentUser')) {
+      setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
+      router.push('/');
     } else {
-      router.push("/signup");
+      router.push('/signup');
     }
   }, []);
 
@@ -24,7 +24,7 @@ export default function Home() {
     localStorage.clear();
     //localStorage.removeItem("currentUser");
     setCurrentUser(null);
-    router.push("/signup");
+    router.push('/signup');
   };
 
   return (
