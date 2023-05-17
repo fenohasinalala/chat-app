@@ -1,35 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { loginSchema } from '../utils/schemas';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
+import { AUTH_API_ROUTES } from '../constants';
+import { storeTokenInLocalStorage } from '../auth';
+import { useRouter } from 'next/router';
+import { log } from 'console';
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    resolver: yupResolver(loginSchema),
   });
 
-  console.log(watch('email')); // you can watch individual input by pass the name of the input
+  //check value of form
+  //console.log(watch('email'));
+
+  const login = async (body) => {
+    try {
+      setIsLoading(true);
+      const response = await axios({
+        method: 'post',
+        url: AUTH_API_ROUTES.LOGIN,
+        data: body,
+      });
+      if (!response?.data?.user?.token) {
+        console.log('Something went wrong during login (1):', response);
+        return;
+      }
+      storeTokenInLocalStorage(response.data.user.token);
+      router.push('/');
+    } catch (err) {
+      console.log('Something went wrong during login (2): ', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        alert(JSON.stringify(data));
+        login(data);
       })}
     >
       <label>Email</label>
-      <input {...register('email')} defaultValue="test" />
+      <input {...register('email')} />
+      {errors.password && <p>{errors.password.message}</p>}
       <label>Password</label>
-      <input {...register('password', { required: true, maxLength: 10 })} />
-      {errors.password && <p>This field is required</p>}
-      <input type="submit" />
+      <input {...register('password')} />
+      {errors.email && <p>{errors.email.message}</p>}
+      <button type="submit">Se connecter</button>
     </form>
   );
 };

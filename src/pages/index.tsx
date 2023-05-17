@@ -5,6 +5,10 @@ import styles from '@/styles/Home.module.css';
 import { useEffect, useState } from 'react';
 import { CreateUser } from './store';
 import { useRouter } from 'next/router';
+import {
+  AUTH_API_ROUTES,
+  AUTH_APP_ROUTES,
+} from '@/features/authentication/constants';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +21,7 @@ export default function Home() {
       setCurrentUser(JSON.parse(connectedUser));
       router.push('/');
     } else {
-      router.push('/signup');
+      router.push(AUTH_APP_ROUTES.SIGN_UP);
     }
   }, []);
 
@@ -25,7 +29,7 @@ export default function Home() {
     localStorage.clear();
     //localStorage.removeItem("currentUser");
     setCurrentUser(null);
-    router.push('/signup');
+    router.push(AUTH_APP_ROUTES.SIGN_UP);
   };
 
   return (
