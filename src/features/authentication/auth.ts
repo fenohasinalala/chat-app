@@ -36,7 +36,7 @@ export async function getAuthenticatedUser() {
       bio: user.bio,
       status: convertUserStatus(user.status),
     };
-    return authenticated ? response.data : false;
+    return { authenticated, connectedUser };
   } catch (err) {
     console.log('getAuthenticatedUser, Something Went Wrong', err);
     return defaultReturnObject;
