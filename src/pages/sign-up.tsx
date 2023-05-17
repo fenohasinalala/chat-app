@@ -9,7 +9,7 @@ function Signup({}: Props) {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (name.length > 0 && email.length > 0 && password.length > 0) {
       const newUser: CreateUser = {

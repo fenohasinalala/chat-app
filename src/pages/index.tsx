@@ -12,8 +12,9 @@ export default function Home() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<CreateUser | null>(null);
   useEffect(() => {
-    if (localStorage.getItem('currentUser')) {
-      setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
+    let connectedUser = localStorage.getItem('currentUser');
+    if (connectedUser) {
+      setCurrentUser(JSON.parse(connectedUser));
       router.push('/');
     } else {
       router.push('/signup');
