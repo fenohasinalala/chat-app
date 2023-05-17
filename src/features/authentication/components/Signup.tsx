@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { loginSchema } from '../utils/schemas';
+import { signUpSchema } from '../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
 import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '../constants';
@@ -11,7 +11,7 @@ import { useAuth } from '../hooks/useAuth';
 
 type Props = {};
 
-const Login = (props: Props) => {
+const Signup = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -22,33 +22,33 @@ const Login = (props: Props) => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(signUpSchema),
   });
 
   //check value of form
   //console.log(watch('email'));
 
-  const login = async (body) => {
+  const signup = async (body) => {
     try {
       setIsLoading(true);
       const response = await axios({
         method: 'post',
-        url: AUTH_API_ROUTES.LOGIN,
+        url: AUTH_API_ROUTES.SIGN_UP,
         data: body,
       });
       if (!response?.data?.user?.token) {
-        console.log('Something went wrong during login (1):', response);
+        console.log('Something went wrong during signup (1):', response);
         return;
       }
       storeTokenInLocalStorage(response.data.user.token);
       router.push('/');
     } catch (err) {
-      console.log('Something went wrong during login (2): ', err);
+      console.log('Something went wrong during signup (2): ', err);
     } finally {
       setIsLoading(false);
     }
   };
-  const { user, authenticated } = useAuth();
+  const { user, authenticated } = useAuth(AUTH_APP_ROUTES.SIGN_UP);
   if (user || authenticated) {
     router.push('/');
   }
@@ -56,24 +56,30 @@ const Login = (props: Props) => {
     <>
       {isLoading ? (
         <p>Loading</p>
-      ) : user ? null : (
+      ) : (
         <>
           <form
             onSubmit={handleSubmit((data) => {
-              login(data);
+              signup(data);
             })}
           >
             <label>Email</label>
             <input {...register('email')} />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.email && <p>{errors.email.message}</p>}
             <label>Password</label>
             <input {...register('password')} />
-            {errors.email && <p>{errors.email.message}</p>}
-            <button type="submit">Login</button>
+            {errors.password && <p>{errors.password.message}</p>}
+            <label>name</label>
+            <input {...register('name')} />
+            {errors.name && <p>{errors.name.message}</p>}
+            <label>bio</label>
+            <input {...register('bio')} />
+            {errors.bio && <p>{errors.bio.message}</p>}
+            <button type="submit">Sign up</button>
           </form>
           <p>
-            New to HEI Chat ?
-            <Link href={AUTH_APP_ROUTES.SIGN_UP}> Create an account.</Link>
+            Already have an HEI Chat account?
+            <Link href={AUTH_APP_ROUTES.LOGIN}> Login.</Link>
           </p>
         </>
       )}
@@ -81,4 +87,4 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default Signup;

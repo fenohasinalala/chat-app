@@ -4,7 +4,7 @@ import { AUTH_APP_ROUTES } from '../constants';
 import { useRouter } from 'next/router';
 import { User } from '@/features/user/types';
 
-export function useAuth() {
+export function useAuth(path = AUTH_APP_ROUTES.LOGIN) {
   const [user, setUser] = useState<User | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -13,7 +13,7 @@ export function useAuth() {
     async function getUserDetails() {
       const { authenticated, connectedUser } = await getAuthenticatedUser();
       if (!authenticated) {
-        router.push(AUTH_APP_ROUTES.LOGIN);
+        router.push(path);
         return;
       }
       setUser(connectedUser);
