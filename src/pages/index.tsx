@@ -1,9 +1,5 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import styles from '@/styles/Home.module.css';
-import { useEffect, useState } from 'react';
-import { CreateUser } from './store';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { AUTH_APP_ROUTES } from '@/features/authentication/constants';
 import { User } from '@/features/user/types';
@@ -17,7 +13,7 @@ export default function Home() {
 
   const logOutHandler = () => {
     localStorage.clear();
-    //localStorage.removeItem("currentUser");
+    //localStorage.removeItem("token");
     setCurrentUser(null);
     router.push(AUTH_APP_ROUTES.LOGIN);
   };
