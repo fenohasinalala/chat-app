@@ -1,4 +1,4 @@
-import Login from '@/features/authentication/componenents/Login';
+import Login from '@/features/authentication/components/Login';
 
 type Props = {};
 function LoginPage({}: Props) {
