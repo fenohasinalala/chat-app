@@ -5,10 +5,7 @@ import styles from '@/styles/Home.module.css';
 import { useEffect, useState } from 'react';
 import { CreateUser } from './store';
 import { useRouter } from 'next/router';
-import {
-  AUTH_API_ROUTES,
-  AUTH_APP_ROUTES,
-} from '@/features/authentication/constants';
+import { AUTH_APP_ROUTES } from '@/features/authentication/constants';
 
 const inter = Inter({ subsets: ['latin'] });
 
