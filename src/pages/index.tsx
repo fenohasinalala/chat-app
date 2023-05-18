@@ -1,13 +1,14 @@
 import { Inter } from 'next/font/google';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { AUTH_APP_ROUTES } from '@/features/authentication/constants';
 import { User } from '@/features/user/types';
 import { useAuth } from '@/features/authentication/hooks/useAuth';
+import { ChannelLayout } from '@/features/layout/ChannelLayout';
+import { AUTH_APP_ROUTES } from '@/constants';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
@@ -35,3 +36,7 @@ export default function Home() {
     </>
   );
 }
+
+Home.PageLayout = ChannelLayout;
+
+export default Home;

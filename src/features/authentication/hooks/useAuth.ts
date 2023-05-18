@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getAuthenticatedUser } from '../auth';
-import { AUTH_APP_ROUTES } from '../constants';
 import { useRouter } from 'next/router';
 import { User } from '@/features/user/types';
+import { AUTH_APP_ROUTES } from '@/constants';
 
 export function useAuth(path = AUTH_APP_ROUTES.LOGIN) {
   const [user, setUser] = useState<User | null>(null);

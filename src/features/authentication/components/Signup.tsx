@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { signUpSchema } from '../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '../constants';
 import { storeTokenInLocalStorage } from '../auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../hooks/useAuth';
+import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
 
 type Props = {};
 

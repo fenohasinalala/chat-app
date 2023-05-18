@@ -1,4 +1,5 @@
 import Signup from '@/features/authentication/components/Signup';
+import { IndexLayout } from '@/features/layout/IndexLayout';
 
 type Props = {};
 function SignupPage({}: Props) {
@@ -8,5 +9,5 @@ function SignupPage({}: Props) {
     </>
   );
 }
-
+SignupPage.PageLayout = IndexLayout;
 export default SignupPage;

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { AUTH_API_ROUTES } from './constants';
 import { User } from '../user/types';
 import { convertUserStatus } from '../user/utils';
+import { AUTH_API_ROUTES } from '@/constants';
 
 export function storeTokenInLocalStorage(token: string) {
   localStorage.setItem('token', token);
