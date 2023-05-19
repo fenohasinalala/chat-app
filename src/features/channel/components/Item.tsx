@@ -1,9 +1,15 @@
 import React from 'react';
 
-type Props = {};
+import { ChannelApi } from '../types';
+type Props = {
+  element: any;
+};
 
 const Item = (props: Props) => {
-  return <div>Item</div>;
+  const { element } = props;
+
+  console.log('element');
+  return <div>{element.name}</div>;
 };
 
 export default Item;

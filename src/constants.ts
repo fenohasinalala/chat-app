@@ -3,7 +3,10 @@ export const API_URL = 'http://localhost:8080';
 export const API_ROUTES = {
   SIGN_UP: `${API_URL}/users`,
   LOGIN: `${API_URL}/users/login`,
-  GET_USER: `${API_URL}/user`,
+  USER: `${API_URL}/user`,
+  USERS: `${API_URL}/users`,
+  CHANNELS: `${API_URL}/channels`,
+  CHANNEL: `${API_URL}/channel`,
 };
 
 export const APP_ROUTES = {

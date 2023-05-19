@@ -1,16 +1,15 @@
 import { Inter } from 'next/font/google';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { User } from '@/features/user/types';
 import { useAuth } from '@/features/authentication/hooks/useAuth';
 import { ChannelLayout } from '@/features/layout/ChannelLayout';
 import { AUTH_APP_ROUTES } from '@/constants';
+import { useUserStore } from './store';
 
 const inter = Inter({ subsets: ['latin'] });
 
 function Home() {
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const setCurrentUser = useUserStore((store) => store.setCurrentUser);
 
   const logOutHandler = () => {
     localStorage.clear();
@@ -20,8 +19,9 @@ function Home() {
   };
 
   const { user, authenticated } = useAuth();
-  console.log(user);
-  console.log(authenticated);
+
+  const currentUser = useUserStore((store) => store.currentUser);
+  //console.log(authenticated);
 
   if (!user || !authenticated) {
     return <div>Home</div>;

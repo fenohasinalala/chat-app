@@ -1,22 +1,18 @@
 import { create } from 'zustand';
-
+import * as yup from 'yup';
+import { User } from '@/features/user/types';
 export type CreateUser = {
   name: string;
   password: string;
   email: string;
 };
 
-type User = {
-  id: string;
-  name: string;
-  password: string;
-  email: string;
-};
 type UserStore = {
-  currentUser: CreateUser | null;
-  newUser: CreateUser;
-  signUp: () => void;
-  setNewUser: (newUser: CreateUser) => void;
+  currentUser: User | null;
+  currentChannelUsers: User[];
+  allUsers: User[];
+  setCurrentUser: (newUser: User | null) => void;
+  setCurrentChannelUsers: (users: User[]) => void;
 };
 
 const emptyUser: CreateUser = {
@@ -25,21 +21,26 @@ const emptyUser: CreateUser = {
   email: '',
 };
 
-export const useUserStore = create<UserStore>((set) => ({
+const userStore = (set): UserStore => ({
   currentUser: null,
-  newUser: emptyUser,
-  signUp() {
+  currentChannelUsers: [],
+  allUsers: [],
+  setCurrentUser: (newUser) => {
     set((state) => ({
-      ...state,
-      currentUser: state.newUser,
-      newUser: emptyUser,
-    }));
-    localStorage.setItem('connected_user', JSON.stringify(this.currentUser));
-  },
-  setNewUser(UserInput) {
-    set((state) => ({
-      ...state,
-      newUser: UserInput,
+      currentUser: newUser,
     }));
   },
-}));
+  setCurrentChannelUsers(users) {
+    set((state) => ({
+      currentUsersChannel: users,
+    }));
+  },
+});
+
+export const useUserStore = create(userStore);
+
+const channelStore = (set) => ({
+  currentChannel: null,
+  userChannels: [],
+  currentChannelMessages: [],
+});

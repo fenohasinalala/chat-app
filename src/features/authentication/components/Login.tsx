@@ -41,6 +41,7 @@ const Login = (props: Props) => {
         return;
       }
       storeTokenInLocalStorage(response.data.user.token);
+
       router.push('/');
     } catch (err) {
       console.log('Something went wrong during login (2): ', err);
