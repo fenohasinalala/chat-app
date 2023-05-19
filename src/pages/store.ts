@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import * as yup from 'yup';
 import { User } from '@/features/user/types';
+import { ChannelApi } from '@/features/channel/types';
 export type CreateUser = {
   name: string;
   password: string;
@@ -13,6 +14,7 @@ type UserStore = {
   allUsers: User[];
   setCurrentUser: (newUser: User | null) => void;
   setCurrentChannelUsers: (users: User[]) => void;
+  setAllUsers: (users: User[]) => void;
 };
 
 const emptyUser: CreateUser = {
@@ -35,12 +37,43 @@ const userStore = (set): UserStore => ({
       currentUsersChannel: users,
     }));
   },
+  setAllUsers(users) {
+    set((state) => ({
+      allUsers: users,
+    }));
+  },
 });
 
 export const useUserStore = create(userStore);
 
-const channelStore = (set) => ({
+type ChannelStore = {
+  currentChannel: ChannelApi | null;
+  userChannels: ChannelApi[];
+  currentChannelMessages: User[];
+  setCurrentChannel: (newChannel: ChannelApi | null) => void;
+  setUserChannels: (channels: ChannelApi[]) => void;
+  setCurrentChannelMessages: (messages: string[]) => void;
+};
+
+const channelStore = (set): ChannelStore => ({
   currentChannel: null,
   userChannels: [],
   currentChannelMessages: [],
+  setCurrentChannel: (newChannel) => {
+    set(() => ({
+      currentChannel: newChannel,
+    }));
+  },
+  setUserChannels: (newChannels) => {
+    set(() => ({
+      userChannels: newChannels,
+    }));
+  },
+  setCurrentChannelMessages: (messageList) => {
+    set(() => ({
+      currentChannelMessages: messageList,
+    }));
+  },
 });
+
+export const useChannelStore = create(channelStore);

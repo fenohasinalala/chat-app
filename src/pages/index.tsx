@@ -21,7 +21,6 @@ function Home() {
   const { user, authenticated } = useAuth();
 
   const currentUser = useUserStore((store) => store.currentUser);
-  //console.log(authenticated);
 
   if (!user || !authenticated) {
     return <div>Home</div>;
