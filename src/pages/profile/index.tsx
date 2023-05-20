@@ -10,7 +10,6 @@ function ProfilePage() {
   useAllUsers();
   const userChanels = useChannelStore((store) => store.userChannels);
   const allUsers = useUserStore((store) => store.allUsers);
-  console.log(userChanels);
 
   return (
     <>

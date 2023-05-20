@@ -7,13 +7,14 @@ import { storeTokenInLocalStorage } from '../auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../hooks/useAuth';
-import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
+import { APP_ROUTES, AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
 
 type Props = {};
 
 const Login = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const { user, authenticated } = useAuth();
   const router = useRouter();
 
   const {
@@ -42,19 +43,16 @@ const Login = (props: Props) => {
       }
       storeTokenInLocalStorage(response.data.user.token);
 
-      router.push('/');
+      router.push(APP_ROUTES.PROFILE);
     } catch (err) {
       console.log('Something went wrong during login (2): ', err);
     } finally {
       setIsLoading(false);
     }
   };
-  const { user, authenticated } = useAuth();
-  if (user || authenticated) {
-    router.push('/');
-  }
   return (
     <>
+      <h1>LOGIN</h1>
       {isLoading ? (
         <p>Loading</p>
       ) : user ? null : (

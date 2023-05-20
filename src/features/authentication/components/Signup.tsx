@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { signUpSchema } from '../utils/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { storeTokenInLocalStorage } from '../auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '../hooks/useAuth';
-import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
+import { APP_ROUTES, AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
 
 type Props = {};
 
@@ -25,7 +25,7 @@ const Signup = (props: Props) => {
     resolver: yupResolver(signUpSchema),
   });
 
-  const signup = async (body) => {
+  const signup = async (body: FieldValues) => {
     try {
       setIsLoading(true);
       const response = await axios({
@@ -47,10 +47,11 @@ const Signup = (props: Props) => {
   };
   const { user, authenticated } = useAuth(AUTH_APP_ROUTES.SIGN_UP);
   if (user || authenticated) {
-    router.push('/');
+    router.push(APP_ROUTES.PROFILE);
   }
   return (
     <>
+      <h1>SIGN UP</h1>
       {isLoading ? (
         <p>Loading</p>
       ) : (

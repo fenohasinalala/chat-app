@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getTokenFromLocalStorage } from '../authentication/auth';
 import { ChannelApi } from './types';
 import * as yup from 'yup';
-import { createChannelSchema } from '../user/utils/schemas';
+import { FieldValues } from 'react-hook-form';
 
 export async function getUserChannels() {
   const defaultReturnObject = { channelsList: [] };
@@ -27,7 +27,7 @@ export async function getUserChannels() {
 }
 
 export async function createChannelsAPI(
-  createChannel: yup.InferType<typeof createChannelSchema>
+  createChannel: FieldValues //: yup.InferType<typeof createChannelSchema>
 ) {
   try {
     const token = getTokenFromLocalStorage();

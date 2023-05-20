@@ -21,7 +21,6 @@ function Profile() {
   const { user, authenticated } = useAuth();
 
   const currentUser = useUserStore((store) => store.currentUser);
-  //console.log(authenticated);
 
   if (!currentUser) {
     return <div>Profile</div>;

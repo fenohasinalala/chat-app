@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
+import { APP_ROUTES, AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
 import { createChannelSchema } from '@/features/user/utils/schemas';
+import { createChannelsAPI } from '../api';
+import { useAuth } from '@/features/authentication/hooks/useAuth';
+import { useUserStore } from '@/pages/store';
 
 type Props = {};
 
-const Signup = (props: Props) => {
+const ChannelForm = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
-
   const router = useRouter();
-
+  const { user, authenticated } = useAuth();
+  const currentUser = useUserStore((store) => store.currentUser);
   const {
     register,
     handleSubmit,
@@ -22,19 +25,21 @@ const Signup = (props: Props) => {
     resolver: yupResolver(createChannelSchema),
   });
 
-  const { user, authenticated } = useAuth(AUTH_APP_ROUTES.SIGN_UP);
-  if (user || authenticated) {
-    router.push('/');
+  if (!user) {
+    return <div>Loading...</div>;
   }
+  console.log(user);
+
   return (
     <>
+      <h1>Create new channel</h1>
       {isLoading ? (
         <p>Loading</p>
       ) : (
         <>
           <form
             onSubmit={handleSubmit((data) => {
-              signup(data);
+              createChannelsAPI(data);
             })}
           >
             <label>name</label>
@@ -46,16 +51,12 @@ const Signup = (props: Props) => {
             <label>members</label>
             <input {...register('members')} />
             {errors.members && <p>{errors.members.message}</p>}
-            <label>bio</label>
+            <button type="submit">Create</button>
           </form>
-          <p>
-            Already have an HEI Chat account?
-            <Link href={AUTH_APP_ROUTES.LOGIN}> Login.</Link>
-          </p>
         </>
       )}
     </>
   );
 };
 
-export default Signup;
+export default ChannelForm;

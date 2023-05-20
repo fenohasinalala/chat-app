@@ -15,6 +15,7 @@ export function useAuth(path = AUTH_APP_ROUTES.LOGIN) {
     async function getUserDetails() {
       const { authenticated, connectedUser } = await getAuthenticatedUser();
       if (!authenticated) {
+        setCurrentUser(null);
         router.push(path);
         return;
       }

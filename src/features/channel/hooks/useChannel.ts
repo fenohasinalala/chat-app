@@ -7,7 +7,6 @@ export function useChannel() {
   useEffect(() => {
     async function getAllChannels() {
       const { channelsList } = await getUserChannels();
-      console.log(channelsList);
       setUserChannels(channelsList);
     }
     getAllChannels();
