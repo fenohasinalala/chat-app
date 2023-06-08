@@ -14,7 +14,6 @@ type Props = {};
 const Signup = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isValidForm, setIsValidForm] = useState(true);
   const router = useRouter();
 
   const {

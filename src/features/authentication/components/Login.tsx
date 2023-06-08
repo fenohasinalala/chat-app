@@ -17,6 +17,9 @@ const Login = (props: Props) => {
   const { user, authenticated } = useAuth();
   const router = useRouter();
 
+  if (user || authenticated) {
+    router.push(APP_ROUTES.PROFILE);
+  }
   const {
     register,
     handleSubmit,

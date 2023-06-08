@@ -16,6 +16,7 @@ const ChannelForm = (props: Props) => {
   const router = useRouter();
   const { user, authenticated } = useAuth();
   const currentUser = useUserStore((store) => store.currentUser);
+  const listItem = [1, 2, 3, 4, 5];
   const {
     register,
     handleSubmit,
@@ -28,7 +29,6 @@ const ChannelForm = (props: Props) => {
   if (!user) {
     return <div>Loading...</div>;
   }
-  console.log(user);
 
   return (
     <>
@@ -38,18 +38,24 @@ const ChannelForm = (props: Props) => {
       ) : (
         <>
           <form
+            name="createChannelForm"
             onSubmit={handleSubmit((data) => {
+              console.log(data);
+
               createChannelsAPI(data);
             })}
           >
             <label>name</label>
-            <input {...register('name')} />
+            <input {...register('name')} type="text" name="channelName" />
             {errors.name && <p>{errors.name.message}</p>}
             <label>type</label>
-            <input {...register('type')} />
+            <select {...register('type')} name="type">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
             {errors.type && <p>{errors.type.message}</p>}
             <label>members</label>
-            <input {...register('members')} />
+            <input {...register('test')} />
             {errors.members && <p>{errors.members.message}</p>}
             <button type="submit">Create</button>
           </form>
