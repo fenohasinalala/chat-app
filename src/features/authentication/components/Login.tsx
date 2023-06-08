@@ -58,17 +58,20 @@ const Login = (props: Props) => {
       ) : user ? null : (
         <>
           <form
+            name="loginForm"
             onSubmit={handleSubmit((data) => {
               login(data);
             })}
           >
             <label>Email</label>
-            <input {...register('email')} />
-            {errors.password && <p>{errors.password.message}</p>}
-            <label>Password</label>
-            <input {...register('password')} />
+            <input {...register('email')} type="email" name="email" />
             {errors.email && <p>{errors.email.message}</p>}
-            <button type="submit">Login</button>
+            <label>Password</label>
+            <input {...register('password')} type="password" name="password" />
+            {errors.password && <p>{errors.password.message}</p>}
+            <button type="submit" className="loginButton">
+              Login
+            </button>
           </form>
           <p>
             New to HEI Chat ?
