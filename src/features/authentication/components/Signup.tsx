@@ -14,11 +14,13 @@ type Props = {};
 const Signup = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isValidForm, setIsValidForm] = useState(true);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+    getValues,
     watch,
     formState: { errors },
   } = useForm({
@@ -49,6 +51,10 @@ const Signup = (props: Props) => {
   if (user || authenticated) {
     router.push(APP_ROUTES.PROFILE);
   }
+
+  function checkConfirmPassword() {
+    return getValues('password') == getValues('confirmPassword') ? true : false;
+  }
   return (
     <>
       <h1>SIGN UP</h1>
@@ -57,23 +63,33 @@ const Signup = (props: Props) => {
       ) : (
         <>
           <form
+            name="registrationForm"
             onSubmit={handleSubmit((data) => {
-              signup(data);
+              if (checkConfirmPassword()) {
+                signup(data);
+              }
+              console.log(data);
             })}
           >
-            <label>Email</label>
-            <input {...register('email')} />
-            {errors.email && <p>{errors.email.message}</p>}
-            <label>Password</label>
-            <input {...register('password')} />
-            {errors.password && <p>{errors.password.message}</p>}
             <label>name</label>
-            <input {...register('name')} />
+            <input {...register('name')} type="text" name="name" />
             {errors.name && <p>{errors.name.message}</p>}
-            <label>bio</label>
-            <input {...register('bio')} />
-            {errors.bio && <p>{errors.bio.message}</p>}
-            <button type="submit">Sign up</button>
+            <label>email</label>
+            <input {...register('email')} type="email" name="email" />
+            {errors.email && <p>{errors.email.message}</p>}
+            <label>password</label>
+            <input {...register('password')} type="password" name="password" />
+            {errors.password && <p>{errors.password.message}</p>}
+            <label>confirmPassword</label>
+            <input
+              {...register('confirmPassword')}
+              type="password"
+              name="confirmPassword"
+            />
+            {!checkConfirmPassword() && <p>{'Not the same password'}</p>}
+            <button type="submit" className="registerButton">
+              Register
+            </button>
           </form>
           <p>
             Already have an HEI Chat account?
