@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { APP_ROUTES, AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
-import { createChannelSchema } from '@/features/user/utils/schemas';
 import { createChannelsAPI } from '../api';
 import { useAuth } from '@/features/authentication/hooks/useAuth';
 import { useChannelStore, useUserStore } from '@/pages/store';
@@ -12,6 +11,7 @@ import Select from 'react-select';
 import { CreateChannel } from '../types';
 import { useAllUsers } from '@/features/user/hooks/useAllUser';
 import { useChannelFetchSelected } from '../hooks/useChannel';
+import { createChannelSchema } from '../utils/schema';
 type Props = {
   id?: number | null;
 };
