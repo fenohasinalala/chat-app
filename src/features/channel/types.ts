@@ -13,3 +13,9 @@ interface Owner {
   name: string;
   email: string;
 }
+
+export interface CreateChannel {
+  name: string;
+  type: string;
+  members: number[];
+}

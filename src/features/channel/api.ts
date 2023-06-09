@@ -5,6 +5,26 @@ import { ChannelApi } from './types';
 import * as yup from 'yup';
 import { FieldValues } from 'react-hook-form';
 
+export async function getChannelById(channelId: number) {
+  const defaultReturnObject = { selectedChannel: null };
+  try {
+    const token = getTokenFromLocalStorage();
+    const response = await axios({
+      method: 'GET',
+      url: API_ROUTES.CHANNEL + '/' + channelId,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { channel } = response.data;
+    const selectedChannel: ChannelApi = channel;
+
+    return { selectedChannel };
+  } catch (err) {
+    console.log('getChannels, Something Went Wrong', err);
+    return defaultReturnObject;
+  }
+}
 export async function getUserChannels() {
   const defaultReturnObject = { channelsList: [] };
   try {

@@ -14,7 +14,7 @@ export const APP_ROUTES = {
   LOGIN: '/login',
   CHANNEL: '/channel',
   CREATE_CHANNEL: '/channel/create',
-  EDIT_CHANNEL: '/channel/edit',
+  EDIT_CHANNEL: '/channel/edit/',
   PROFILE: '/profile',
   MESSAGE: '/message',
 };
