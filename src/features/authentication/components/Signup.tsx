@@ -51,9 +51,6 @@ const Signup = (props: Props) => {
     router.push(APP_ROUTES.PROFILE);
   }
 
-  function checkConfirmPassword() {
-    return getValues('password') == getValues('confirmPassword') ? true : false;
-  }
   return (
     <>
       <h1>SIGN UP</h1>
@@ -64,28 +61,30 @@ const Signup = (props: Props) => {
           <form
             name="registrationForm"
             onSubmit={handleSubmit((data) => {
-              if (checkConfirmPassword()) {
-                signup(data);
-              }
-              console.log(data);
+              signup(data);
             })}
           >
             <label>name</label>
             <input {...register('name')} type="text" name="name" />
             {errors.name && <p>{errors.name.message}</p>}
+            <br />
             <label>email</label>
             <input {...register('email')} type="email" name="email" />
             {errors.email && <p>{errors.email.message}</p>}
+
+            <br />
             <label>password</label>
             <input {...register('password')} type="password" name="password" />
             {errors.password && <p>{errors.password.message}</p>}
+            <br />
             <label>confirmPassword</label>
             <input
               {...register('confirmPassword')}
               type="password"
               name="confirmPassword"
             />
-            {!checkConfirmPassword() && <p>{'Not the same password'}</p>}
+            {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+            <br />
             <button type="submit" className="registerButton">
               Register
             </button>

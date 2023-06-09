@@ -5,3 +5,7 @@ export const createChannelSchema = object({
   type: string().required('Type is required'),
   members: array(),
 });
+
+export const createMessageSchema = object({
+  message: string().required('Message is required'),
+});

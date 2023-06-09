@@ -24,3 +24,15 @@ export interface CreateChannel {
 export interface AddMembers {
   members: number[];
 }
+
+interface sendMessage {
+  content: string;
+}
+
+export interface sendMessageToPM extends sendMessage {
+  recipientId: number;
+}
+
+export interface sendNessageToChannel extends sendMessage {
+  channelId: number;
+}
