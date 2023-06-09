@@ -29,9 +29,36 @@ function Profile() {
     <>
       <div>
         <h1>Profile</h1>
-        <p>User connected: {currentUser.name}</p>
+        <p>
+          name: {currentUser.name}
+          <br />
+          email: {currentUser.email}
+          <br />
+          bio: {currentUser.bio}
+        </p>
         <button onClick={logOutHandler}>Log out</button>
       </div>
+      <form name="editProfileForm">
+        <label>name</label>
+        <input type="text" name="name" />
+
+        <br />
+        <label>email</label>
+        <input type="email" name="email" />
+        <br />
+        <label>password</label>
+        <input type="password" name="currentPassword" />
+
+        <br />
+        <label>new password</label>
+        <input type="password" name="newPassword" />
+        <br />
+        <label>confirm password</label>
+        <input type="password" name="confirmPassword" />
+        <br />
+        <label>bio</label>
+        <textarea name="bio"></textarea>
+      </form>
     </>
   );
 }
