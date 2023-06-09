@@ -4,6 +4,12 @@ import { useAuth } from '@/features/authentication/hooks/useAuth';
 import { ChannelLayout } from '@/features/layout/ChannelLayout';
 import { AUTH_APP_ROUTES } from '@/constants';
 import { useUserStore } from '@/pages/store';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { editProfileSchema } from '../utils/schemas';
+import { useEffect } from 'react';
+import { editProfileAPI } from '../api';
+import { EditUser } from '../types';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,10 +27,30 @@ function Profile() {
   const { user, authenticated } = useAuth();
 
   const currentUser = useUserStore((store) => store.currentUser);
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(editProfileSchema),
+  });
+
+  useEffect(() => {
+    reset({
+      name: currentUser ? currentUser?.name : '',
+      bio: currentUser ? currentUser?.bio : '',
+      email: currentUser ? currentUser.email : '',
+      currentPassword: '',
+      confirmPassword: '',
+      newPassword: '',
+    });
+  }, [reset, currentUser]);
 
   if (!currentUser) {
     return <div>Profile</div>;
   }
+
   return (
     <>
       <div>
@@ -38,26 +64,62 @@ function Profile() {
         </p>
         <button onClick={logOutHandler}>Log out</button>
       </div>
-      <form name="editProfileForm">
+      <form
+        name="editProfileForm"
+        onSubmit={handleSubmit((data) => {
+          console.log(data);
+          const userToUpdated: EditUser = {
+            name: data.name,
+            email: data.email,
+            bio: data.bio,
+            oldPassword: data.oldPassword,
+            password: data.password,
+          };
+          editProfileAPI(userToUpdated).then((res) => {
+            setCurrentUser(res);
+          });
+        })}
+      >
         <label>name</label>
-        <input type="text" name="name" />
-
+        <input type="text" {...register('name')} name="name" />
+        {errors.name && <p>{errors.name.message}</p>}
         <br />
         <label>email</label>
-        <input type="email" name="email" />
+        <input {...register('email')} type="email" name="email" />
+        {errors.email && <p>{errors.email.message}</p>}
         <br />
-        <label>password</label>
-        <input type="password" name="currentPassword" />
+        <label>current password</label>
+        <input
+          {...register('currentPassword')}
+          type="password"
+          name="currentPassword"
+        />
 
+        {errors.currentPassword && <p>{errors.currentPassword.message}</p>}
         <br />
         <label>new password</label>
-        <input type="password" name="newPassword" />
+        <input
+          {...register('newPassword')}
+          type="password"
+          name="newPassword"
+        />
+        {errors.newPassword && <p>{errors.newPassword.message}</p>}
         <br />
         <label>confirm password</label>
-        <input type="password" name="confirmPassword" />
+        <input
+          {...register('confirmPassword')}
+          type="password"
+          name="confirmPassword"
+        />
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         <br />
         <label>bio</label>
-        <textarea name="bio"></textarea>
+        <textarea {...register('bio')} name="bio"></textarea>
+        {errors.bio && <p>{errors.bio.message}</p>}
+        <br />
+        <button type="submit" className="updateProfileButton">
+          Update Profile
+        </button>
       </form>
     </>
   );

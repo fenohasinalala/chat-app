@@ -13,3 +13,11 @@ export type User = {
   bio: null | string;
   status: UserStatus;
 };
+
+export type EditUser = {
+  name: string;
+  email: string;
+  bio: string;
+  oldPassword: string;
+  password: string;
+};
