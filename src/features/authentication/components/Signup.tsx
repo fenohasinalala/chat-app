@@ -39,7 +39,7 @@ const Signup = (props: Props) => {
         return;
       }
       storeTokenInLocalStorage(response.data.user.token);
-      router.push('/');
+      router.push(APP_ROUTES.PROFILE);
     } catch (err) {
       console.log('Something went wrong during signup (2): ', err);
     } finally {
