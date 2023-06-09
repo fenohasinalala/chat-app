@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { APP_ROUTES, AUTH_API_ROUTES, AUTH_APP_ROUTES } from '@/constants';
 import { createChannelSchema } from '@/features/user/utils/schemas';
-import { createChannelsAPI } from '../api';
+import { addMembersChannelsAPI, createChannelsAPI } from '../api';
 import { useAuth } from '@/features/authentication/hooks/useAuth';
 import { useChannelStore, useUserStore } from '@/pages/store';
 import Select from 'react-select';
@@ -19,7 +19,7 @@ interface UserSelect {
   value: number;
   label: string;
 }
-const ChannelForm = (props: Props) => {
+const ChannelEditForm = (props: Props) => {
   const { id } = props;
   useChannelFetchSelected(id);
   const currentChannel = useChannelStore((store) => store.currentChannel);
@@ -66,29 +66,24 @@ const ChannelForm = (props: Props) => {
 
   return (
     <>
-      <h1>Create new channel</h1>
+      <h1>Add user to channel</h1>
       {isLoading ? (
         <p>Loading</p>
       ) : (
         <>
           <form
-            name="createChannelForm"
+            name="editChannelForm"
             onSubmit={handleSubmit((data) => {
               let IdList: number[] = [];
               data.members.length > 0 &&
                 data.members.forEach((e) => {
                   IdList.push(e.value);
                 });
-              const newChannel: CreateChannel = {
-                id: id ? id : null,
-                name: data.channelName,
-                type: data.type,
-                members: IdList,
-              };
-              console.log(newChannel);
-              createChannelsAPI(newChannel);
 
-              router.push(APP_ROUTES.PROFILE);
+              if (id) {
+                addMembersChannelsAPI(id, { members: IdList });
+                router.push(APP_ROUTES.PROFILE);
+              }
             })}
           >
             <label>name</label>
@@ -96,10 +91,11 @@ const ChannelForm = (props: Props) => {
               {...register('channelName')}
               type="text"
               name="channelName"
+              disabled={true}
             />
             {errors.channelName && <p>{errors.channelName.message}</p>}
             <label>type</label>
-            <select {...register('type')} name="type">
+            <select {...register('type')} name="type" disabled={true}>
               <option value="public">Public</option>
               <option value="private">Private</option>
             </select>
@@ -113,13 +109,13 @@ const ChannelForm = (props: Props) => {
                     isMulti
                     {...field}
                     options={...usersSelect}
-                    placeholder="Add Members"
+                    placeholder="users to add"
                   />
                 );
               }}
             />
-            <button type="submit" className="createChannelButton">
-              Create Channel
+            <button type="submit" className="editChannelButton">
+              Edit Channel
             </button>
           </form>
         </>
@@ -128,4 +124,4 @@ const ChannelForm = (props: Props) => {
   );
 };
 
-export default ChannelForm;
+export default ChannelEditForm;

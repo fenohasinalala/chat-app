@@ -1,4 +1,4 @@
-import ChannelForm from '@/features/channel/components/ChannelForm';
+import ChannelEditForm from '@/features/channel/components/ChannelEditForm';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
@@ -15,7 +15,7 @@ const EditChannel = (props: Props) => {
 
   console.log(`id: ${id}`);
 
-  return <>{id ? <ChannelForm id={id} /> : null}</>;
+  return <>{id ? <ChannelEditForm id={id} /> : null}</>;
 };
 
 export default EditChannel;

@@ -1,7 +1,7 @@
 import { API_ROUTES } from '@/constants';
 import axios from 'axios';
 import { getTokenFromLocalStorage } from '../authentication/auth';
-import { ChannelApi } from './types';
+import { AddMembers, ChannelApi, CreateChannel } from './types';
 import * as yup from 'yup';
 import { FieldValues } from 'react-hook-form';
 
@@ -47,7 +47,7 @@ export async function getUserChannels() {
 }
 
 export async function createChannelsAPI(
-  createChannel: FieldValues //: yup.InferType<typeof createChannelSchema>
+  createChannel: CreateChannel //: yup.InferType<typeof createChannelSchema>
 ) {
   try {
     const token = getTokenFromLocalStorage();
@@ -58,6 +58,22 @@ export async function createChannelsAPI(
         Authorization: `Bearer ${token}`,
       },
       data: createChannel,
+    });
+  } catch (err) {
+    console.log('getChannels, Something Went Wrong', err);
+  }
+}
+
+export async function addMembersChannelsAPI(id: number, members: AddMembers) {
+  try {
+    const token = getTokenFromLocalStorage();
+    const response = await axios({
+      method: 'POST',
+      url: API_ROUTES.CHANNELS + '/' + id + '/members',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: members,
     });
   } catch (err) {
     console.log('getChannels, Something Went Wrong', err);

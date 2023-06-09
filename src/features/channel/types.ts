@@ -15,7 +15,12 @@ interface Owner {
 }
 
 export interface CreateChannel {
+  id: number | null;
   name: string;
   type: string;
+  members: number[];
+}
+
+export interface AddMembers {
   members: number[];
 }

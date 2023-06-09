@@ -30,7 +30,7 @@ const ChannelItem = (props: Props) => {
             selectChannel();
           }}
         >
-          MOD
+          +
         </button>{' '}
       </span>
     </>
