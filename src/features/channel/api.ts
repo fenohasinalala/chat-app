@@ -5,6 +5,7 @@ import {
   AddMembers,
   ChannelApi,
   CreateChannel,
+  Message,
   sendMessageToPM,
   sendNessageToChannel,
 } from './types';
@@ -99,5 +100,44 @@ export async function sendMessageAPI(
     });
   } catch (err) {
     console.log('sendMessage, Something Went Wrong', err);
+  }
+}
+
+export async function getChannelMessage(id: number) {
+  try {
+    const token = getTokenFromLocalStorage();
+    const response = await axios({
+      method: 'GET',
+      url: API_ROUTES.CHANNEL_MESSAGES + id,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { messages = [] } = response.data;
+    const AllMessages: Message[] = messages;
+    return AllMessages;
+  } catch (err) {
+    console.log('getChannelMessage, Something Went Wrong', err);
+    return [];
+  }
+}
+
+export async function getPrivateMessage(id: number) {
+  try {
+    const token = getTokenFromLocalStorage();
+    const response = await axios({
+      method: 'GET',
+      url: API_ROUTES.MESSAGES + '/' + id,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { messages = [] } = response.data;
+    const AllMessages: Message[] = messages;
+    return AllMessages;
+  } catch (err) {
+    console.log('getPrivateMessage, Something Went Wrong', err);
+    return [];
   }
 }

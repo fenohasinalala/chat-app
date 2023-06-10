@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import * as yup from 'yup';
 import { User } from '@/features/user/types';
-import { ChannelApi } from '@/features/channel/types';
+import { ChannelApi, Message } from '@/features/channel/types';
 export type CreateUser = {
   name: string;
   password: string;
@@ -49,16 +49,19 @@ export const useUserStore = create(userStore);
 type ChannelStore = {
   currentChannel: ChannelApi | null;
   userChannels: ChannelApi[];
-  currentChannelMessages: User[];
+  currentChannelMessages: Message[];
+  currentPrivateMessages: Message[];
   setCurrentChannel: (newChannel: ChannelApi | null) => void;
   setUserChannels: (channels: ChannelApi[]) => void;
-  setCurrentChannelMessages: (messages: string[]) => void;
+  setCurrentChannelMessages: (messages: Message[]) => void;
+  setCurrentPrivateMessages: (messages: Message[]) => void;
 };
 
 const channelStore = (set): ChannelStore => ({
   currentChannel: null,
   userChannels: [],
   currentChannelMessages: [],
+  currentPrivateMessages: [],
   setCurrentChannel: (newChannel) => {
     set(() => ({
       currentChannel: newChannel,
@@ -70,6 +73,12 @@ const channelStore = (set): ChannelStore => ({
     }));
   },
   setCurrentChannelMessages: (messageList) => {
+    set(() => ({
+      currentChannelMessages: messageList,
+    }));
+  },
+
+  setCurrentPrivateMessages: (messageList) => {
     set(() => ({
       currentChannelMessages: messageList,
     }));

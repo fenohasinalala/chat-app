@@ -36,3 +36,20 @@ export interface sendMessageToPM extends sendMessage {
 export interface sendNessageToChannel extends sendMessage {
   channelId: number;
 }
+
+export interface Message {
+  id: number;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  senderId: number;
+  recipientId: number;
+  channelId: null;
+  sender: Sender;
+}
+
+export interface Sender {
+  id: number;
+  name: string;
+  email: string;
+}
