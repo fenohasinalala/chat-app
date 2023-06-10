@@ -1,9 +1,12 @@
 import { API_ROUTES } from '@/constants';
 import axios from 'axios';
 import { getTokenFromLocalStorage } from '../authentication/auth';
-import { AddMembers, ChannelApi, CreateChannel } from './types';
-import * as yup from 'yup';
-import { FieldValues } from 'react-hook-form';
+import {
+  AddMembers,
+  ChannelApi,
+  CreateChannel,
+  sendMessageToPM,
+} from './types';
 
 export async function getChannelById(channelId: number) {
   const defaultReturnObject = { selectedChannel: null };
@@ -65,6 +68,22 @@ export async function createChannelsAPI(
 }
 
 export async function addMembersChannelsAPI(id: number, members: AddMembers) {
+  try {
+    const token = getTokenFromLocalStorage();
+    const response = await axios({
+      method: 'POST',
+      url: API_ROUTES.CHANNELS + '/' + id + '/members',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: members,
+    });
+  } catch (err) {
+    console.log('getChannels, Something Went Wrong', err);
+  }
+}
+
+export async function sendMessage(id: number, msg: sendMessageToPM) {
   try {
     const token = getTokenFromLocalStorage();
     const response = await axios({

@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { createMessageSchema } from '../utils/schema';
 import { sendMessageToPM } from '../types';
+import { useAuth } from '@/features/authentication/hooks/useAuth';
 
 interface Props {
   id: number;
@@ -9,12 +10,18 @@ interface Props {
 export default function PrivateMessage(props: Props) {
   const { id } = props;
 
+  const { user, authenticated } = useAuth();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(createMessageSchema) });
-  console.log(id);
+
+  if (!user) {
+    return <div></div>;
+  }
+
   return (
     <>
       <div>private message, id:{id}</div>
