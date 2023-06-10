@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { createMessageSchema } from '../utils/schema';
 import { sendMessageToPM } from '../types';
 import { useAuth } from '@/features/authentication/hooks/useAuth';
+import { sendMessageAPI } from '../api';
 
 interface Props {
   id: number;
@@ -32,6 +33,7 @@ export default function PrivateMessage(props: Props) {
             recipientId: id,
           };
           console.log(messageToSend);
+          sendMessageAPI(messageToSend);
         })}
       >
         <textarea
