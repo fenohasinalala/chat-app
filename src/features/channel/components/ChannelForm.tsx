@@ -85,7 +85,6 @@ const ChannelForm = (props: Props) => {
                 type: data.type,
                 members: IdList,
               };
-              console.log(newChannel);
               createChannelsAPI(newChannel);
 
               router.push(APP_ROUTES.PROFILE);

@@ -67,7 +67,6 @@ function Profile() {
       <form
         name="editProfileForm"
         onSubmit={handleSubmit((data) => {
-          console.log(data);
           const userToUpdated: EditUser = {
             name: data.name,
             email: data.email,

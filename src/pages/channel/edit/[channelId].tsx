@@ -13,8 +13,6 @@ const EditChannel = (props: Props) => {
     }
   }, [router.query.channelId]);
 
-  console.log(`id: ${id}`);
-
   return <>{id ? <ChannelEditForm id={id} /> : null}</>;
 };
 

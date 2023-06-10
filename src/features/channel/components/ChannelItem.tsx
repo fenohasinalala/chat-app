@@ -12,7 +12,6 @@ const ChannelItem = (props: Props) => {
   const { element } = props;
   const setCurrentChannel = useChannelStore((store) => store.setCurrentChannel);
   const currentChannel = useChannelStore((store) => store.currentChannel);
-  console.log(currentChannel);
   const router = useRouter();
 
   const selectChannel = () => {

@@ -80,7 +80,7 @@ const channelStore = (set): ChannelStore => ({
 
   setCurrentPrivateMessages: (messageList) => {
     set(() => ({
-      currentChannelMessages: messageList,
+      currentPrivateMessages: messageList,
     }));
   },
 });

@@ -1,5 +1,5 @@
 import { useChannelStore } from '@/pages/store';
-import { getChannelById, getUserChannels } from '../api';
+import { getChannelById, getPrivateMessage, getUserChannels } from '../api';
 import { useEffect } from 'react';
 
 export function useChannelFetchSelected(id: number | undefined | null) {
@@ -14,12 +14,14 @@ export function useChannelFetchSelected(id: number | undefined | null) {
     getChannel();
   }, []);
 }
-export function useGetPrivateMessage() {
-  const setUserChannels = useChannelStore((store) => store.setUserChannels);
+export function useGetPrivateMessage(id: number) {
+  const setCurrentPrivateMessages = useChannelStore(
+    (store) => store.setCurrentPrivateMessages
+  );
   useEffect(() => {
     async function getAllChannels() {
-      const { channelsList } = await getUserChannels();
-      setUserChannels(channelsList);
+      const AllMessages = await getPrivateMessage(id);
+      setCurrentPrivateMessages(AllMessages);
     }
     getAllChannels();
   }, []);
