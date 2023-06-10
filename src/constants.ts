@@ -7,6 +7,9 @@ export const API_ROUTES = {
   USERS: `${API_URL}/users`,
   CHANNELS: `${API_URL}/channels`,
   CHANNEL: `${API_URL}/channel`,
+  MESSAGE: `${API_URL}/message`,
+  MESSAGES: `${API_URL}/messages`,
+  CHANNEL_MESSAGES: `${API_URL}/messages/channel/`,
 };
 
 export const APP_ROUTES = {
