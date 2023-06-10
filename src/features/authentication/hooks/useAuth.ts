@@ -5,7 +5,7 @@ import { User } from '@/features/user/types';
 import { AUTH_APP_ROUTES } from '@/constants';
 import { useUserStore } from '@/pages/store';
 
-export function useAuth(path = AUTH_APP_ROUTES.LOGIN) {
+export function useAuth(path = AUTH_APP_ROUTES.SIGN_UP) {
   const [user, setUser] = useState<User | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -25,6 +25,5 @@ export function useAuth(path = AUTH_APP_ROUTES.LOGIN) {
     }
     getUserDetails();
   }, []);
-
   return { user, authenticated };
 }

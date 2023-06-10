@@ -14,7 +14,7 @@ type Props = {};
 const Login = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { user, authenticated } = useAuth();
+  const { user, authenticated } = useAuth(AUTH_APP_ROUTES.LOGIN);
   const router = useRouter();
 
   if (user || authenticated) {
